@@ -12,7 +12,12 @@ const AuthInput = ({ showPassword, handleShowPassword }) => (
   <>
     {/* Email Input */}
     <InputGroup w='50%'>
-      <InputLeftElement color='gray.500' pointerEvents='none' h='50px' display='flex' alignItems='center'>
+      <InputLeftElement 
+        color='gray.500' 
+        pointerEvents='none' 
+        h='50px' 
+        display='flex' 
+        alignItems='center'>
         <MdEmail />
       </InputLeftElement>
       <Input
@@ -28,7 +33,11 @@ const AuthInput = ({ showPassword, handleShowPassword }) => (
 
     {/* Password Input */}
     <InputGroup w='50%'>
-      <InputLeftElement color='gray.500' pointerEvents='none' h='50px' display='flex' alignItems='center'>
+      <InputLeftElement 
+        color='gray.500' 
+        pointerEvents='none' 
+        h='50px' display='flex' 
+        alignItems='center'>
         <RiLockPasswordFill />
       </InputLeftElement>
       <Input
@@ -42,7 +51,11 @@ const AuthInput = ({ showPassword, handleShowPassword }) => (
         rounded='md'
         h='50px'
       />
-      <InputRightElement width='4.5rem' h='50px' display='flex' alignItems='center'>
+      <InputRightElement 
+        width='4.5rem' 
+        h='50px' 
+        display='flex' 
+        alignItems='center'>
         <Button 
           color="gray.500" 
           variant='ghost' 
@@ -80,8 +93,9 @@ const LoginPage = () => {
   return (
     <Flex color='white'>
       {/* Background Image */}
-      <Center w='100vw' h='100vh' m='0' p='0'>
+      <Center w='50vw' h='100vh' m='0' p='0'>
         <AdvancedImage
+          draggable={false} 
           cldImg={cld
             .image('bg-01_bcoz28')
             .format('auto')
@@ -95,10 +109,11 @@ const LoginPage = () => {
       </Center>
 
     {/* Login Form */}
-    <Center w='100vw' h='100vh' bg='gray.300' m='0' p='0'>
+    <Center w='50vw' h='100vh' bg='gray.300' m='0' p='0'>
       <VStack w='100%' spacing='10'>
         <Center  m='0' p='0'>
           <AdvancedImage
+            draggable={false} 
             cldImg={cld
               .image('clipboard-image-1729707349_e6xxhf')
               .format('auto')
