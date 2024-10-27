@@ -7,13 +7,14 @@ import {
     Grid,
     Text,
     IconButton,
-    Tooltip,
+    Tooltip
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon, QuestionIcon } from '@chakra-ui/icons';
 
 const ScheduleCalendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState(null); // State to track the selected day
+    
 
     const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
 
@@ -54,7 +55,7 @@ const ScheduleCalendar = () => {
                     width="40px"
                     height="40px"
                     mx="auto"
-                    bg={selectedDay === i ? "blue.500" : "transparent"} // Change background if active
+                    bg={selectedDay === i ? "#071434" : "transparent"} // Change background if active
                     color={selectedDay === i ? "white" : "black"} // Change text color if active
                     onClick={() => handleDayClick(i)} // Handle day click
                 >
@@ -67,47 +68,45 @@ const ScheduleCalendar = () => {
     };
 
     return (
-        <Flex justify="center" align="center" bg="gray.100">
-            <Box width="400px" bg="white" borderRadius="lg" boxShadow="lg">
-                <Flex bg="blue.900" color="white" p={4} borderTopRadius="lg" justify="space-between" align="center">
-                    <Text fontSize="lg" fontWeight="semibold">Select Date</Text>
-                    <Tooltip label="Help" aria-label="A tooltip">
-                        <QuestionIcon />
-                    </Tooltip>
+        <Box width="100%" bg="white" borderRadius="lg" boxShadow="lg">
+            <Flex bg="#071434" color="white" p={4} borderTopRadius="lg" justify="space-between" align="center">
+                <Text fontSize="lg" fontWeight="semibold">Select Date</Text>
+                <Tooltip label="Help" aria-label="A tooltip">
+                    <QuestionIcon />
+                </Tooltip>
+            </Flex>
+            <Box p={4}>
+                <Flex justify="space-between" align="center" mb={4}>
+                    <IconButton
+                        icon={<ChevronLeftIcon />}
+                        aria-label="Previous Month"
+                        onClick={handlePrevMonth}
+                        colorScheme="gray"
+                    />
+                    <Text fontSize="lg" fontWeight="semibold">
+                        {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
+                    </Text>
+                    <IconButton
+                        icon={<ChevronRightIcon />}
+                        aria-label="Next Month"
+                        onClick={handleNextMonth}
+                        colorScheme="gray"
+                    />
                 </Flex>
-                <Box p={4}>
-                    <Flex justify="space-between" align="center" mb={4}>
-                        <IconButton
-                            icon={<ChevronLeftIcon />}
-                            aria-label="Previous Month"
-                            onClick={handlePrevMonth}
-                            colorScheme="gray"
-                        />
-                        <Text fontSize="lg" fontWeight="semibold">
-                            {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
-                        </Text>
-                        <IconButton
-                            icon={<ChevronRightIcon />}
-                            aria-label="Next Month"
-                            onClick={handleNextMonth}
-                            colorScheme="gray"
-                        />
-                    </Flex>
-                    <Grid fontSize='0.6rem' alignItems='center' templateColumns="repeat(7, 1fr)" textAlign="center" color="gray.500" mb={2}>
-                        <Text>Sunday</Text>
-                        <Text>Monday</Text>
-                        <Text>Tuesday</Text>
-                        <Text>Wednesday</Text>
-                        <Text>Thursday</Text>
-                        <Text>Friday</Text>
-                        <Text>Saturday</Text>
-                    </Grid>
-                    <Grid templateColumns="repeat(7, 1fr)" textAlign="center" height="300px" overflowY="auto">
-                        {renderDays()}
-                    </Grid>
-                </Box>
+                <Grid fontSize='0.6rem' alignItems='center' templateColumns="repeat(7, 1fr)" textAlign="center" color="gray.500" mb={2}>
+                    <Text>Sunday</Text>
+                    <Text>Monday</Text>
+                    <Text >Tuesday</Text>
+                    <Text>Wednesday</Text>
+                    <Text>Thursday</Text>
+                    <Text>Friday</Text>
+                    <Text>Saturday</Text>
+                </Grid>
+                <Grid templateColumns="repeat(7, 1fr)" gap={2}>
+                    {renderDays()}
+                </Grid>
             </Box>
-        </Flex>
+        </Box>
     );
 };
 

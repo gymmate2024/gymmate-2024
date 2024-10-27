@@ -7,8 +7,13 @@ import { FaUsersBetweenLines } from "react-icons/fa6";
 import { RiFeedbackLine } from "react-icons/ri";
 import DashboardButtons from '../components/DashboardButtons.jsx';
 import DashboardTable from "../components/DashboardTable.jsx";
+import { useNavigate } from "react-router-dom";
+
 
 const DashboardPage = () => {
+
+  const navigate = useNavigate(); 
+
   return (
     <Box 
       bg='gray.300'
@@ -43,7 +48,8 @@ const DashboardPage = () => {
           <SimpleGrid columns={3} spacing={10}>
             <DashboardButtons
               text="Schedule Management" 
-              icon={GrSchedules} 
+              icon={GrSchedules}
+              onClick={() => navigate('/schedule')}
             />
             <DashboardButtons 
               text="Walk-In Booking" 

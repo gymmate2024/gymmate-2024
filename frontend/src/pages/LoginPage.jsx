@@ -7,6 +7,7 @@ import { BiSolidShow } from "react-icons/bi";
 import { BiSolidHide } from "react-icons/bi";
 import React from "react";
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 
 const AuthInput = ({ showPassword, handleShowPassword }) => (
   <>
@@ -86,9 +87,11 @@ const handleRegister = () => {
 };
 
 const LoginPage = () => {
-  const cld = new Cloudinary({ cloud: { cloudName: 'dvbl1rjtc' } });
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleShowPassword = () => setShowPassword(!showPassword);
+const cld = new Cloudinary({ cloud: { cloudName: 'dvbl1rjtc' } });
+const [showPassword, setShowPassword] = React.useState(false);
+const handleShowPassword = () => setShowPassword(!showPassword);
+const navigate = useNavigate(); 
+
 
   return (
     <Flex color='white'>
@@ -125,15 +128,15 @@ const LoginPage = () => {
           />
         </Center>
         <AuthInput showPassword={showPassword} handleShowPassword={handleShowPassword} />
-        <Button 
-          w='50%' 
+        <Button
+          w='50%'
           h='50px' 
           bgColor='#FE7654'
           color='white'
           _hover={{ bg: '#e65c3b' }} 
           _active={{ bg: '#cc4a2d' }}
-        >
-          Log In
+          onClick={() => navigate('/dashboard')}>
+            Log In
         </Button>
         <HStack spacing='2' w='50%' justifyContent='space-between'>
           <Text 

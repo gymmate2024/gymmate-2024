@@ -1,5 +1,6 @@
-import { Box, Heading, VStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, VStack } from "@chakra-ui/react";
 import ScheduleCalendar from "../components/ScheduleCalendar";
+import ScheduleTime from "../components/ScheduleTime";
 
 const SchedulePage = () => {
     return (
@@ -30,7 +31,10 @@ const SchedulePage = () => {
                 top='10vh' 
                 bottom={0}
                 p='5%'>
-                <ScheduleCalendar/>
+                <Flex gap='10' align="center" bg="gray.100">
+                    <ScheduleCalendar/>
+                    <ScheduleTime/>
+                </Flex>
             </Box>
         </VStack>
     </Box>
