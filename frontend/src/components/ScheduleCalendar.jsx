@@ -1,23 +1,11 @@
-// Calendar.js
-import { useState } from 'react';
-import {
-    Box,
-    Button,
-    Flex,
-    Grid,
-    Text,
-    IconButton,
-    Tooltip
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Grid, Text, IconButton, Tooltip } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon, QuestionIcon } from '@chakra-ui/icons';
+import useScheduleStore from "../store/schedule.js"; // Import the Zustand store
 
 const ScheduleCalendar = () => {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedDay, setSelectedDay] = useState(null); // State to track the selected day
-    
+    const { currentDate, selectedDay, setCurrentDate, setSelectedDay } = useScheduleStore(); // Use the Zustand store
 
     const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
-
     const getFirstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
 
     const handlePrevMonth = () => {
@@ -44,10 +32,12 @@ const ScheduleCalendar = () => {
         const firstDay = getFirstDayOfMonth(currentDate.getMonth(), currentDate.getFullYear());
         const totalDays = daysInMonth(currentDate.getMonth(), currentDate.getFullYear());
 
+        // Add empty boxes for days before the first day of the month
         for (let i = 0; i < firstDay; i++) {
             days.push(<Box key={`empty-${i}`} />);
         }
 
+        // Add buttons for each day of the month
         for (let i = 1; i <= totalDays; i++) {
             days.push(
                 <Button
@@ -67,6 +57,15 @@ const ScheduleCalendar = () => {
         return days;
     };
 
+    const renderWeekDays = () => {
+        const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        return weekDays.map((day, index) => (
+            <Box key={index} textAlign="center" fontWeight="light">
+                {day}
+            </Box>
+        ));
+    };
+
     return (
         <Box width="100%" bg="white" borderRadius="lg" boxShadow="lg">
             <Flex bg="#071434" color="white" p={4} borderTopRadius="lg" justify="space-between" align="center">
@@ -84,7 +83,7 @@ const ScheduleCalendar = () => {
                         colorScheme="gray"
                     />
                     <Text fontSize="lg" fontWeight="semibold">
-                        {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
+                        {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                     </Text>
                     <IconButton
                         icon={<ChevronRightIcon />}
@@ -93,14 +92,9 @@ const ScheduleCalendar = () => {
                         colorScheme="gray"
                     />
                 </Flex>
-                <Grid fontSize='0.6rem' alignItems='center' templateColumns="repeat(7, 1fr)" textAlign="center" color="gray.500" mb={2}>
-                    <Text>Sunday</Text>
-                    <Text>Monday</Text>
-                    <Text >Tuesday</Text>
-                    <Text>Wednesday</Text>
-                    <Text>Thursday</Text>
-                    <Text>Friday</Text>
-                    <Text>Saturday</Text>
+                {/* Render the day labels */}
+                <Grid templateColumns="repeat(7, 1fr)" gap={2}>
+                    {renderWeekDays()}
                 </Grid>
                 <Grid templateColumns="repeat(7, 1fr)" gap={2}>
                     {renderDays()}
