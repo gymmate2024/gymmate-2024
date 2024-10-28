@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import SideMenu from "./components/SideMenu";
 import SchedulePage from "./pages/SchedulePage";
+import WalkinBookingPage from "./pages/WalkinBookingPage";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/schedule" element={<SchedulePage />} />
+        <Route path="/walkin" element={<WalkinBookingPage />} />
       </Routes>
     </Flex>
   );

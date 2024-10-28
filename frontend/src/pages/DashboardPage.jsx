@@ -54,6 +54,7 @@ const DashboardPage = () => {
             <DashboardButtons 
               text="Walk-In Booking" 
               icon={AiOutlineSchedule} 
+              onClick={() => navigate('/walkin')}
             />
             <DashboardButtons 
               text="Booking Management" 

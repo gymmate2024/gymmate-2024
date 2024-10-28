@@ -73,7 +73,7 @@ const SideMenu = () => {
                   h='50px'
                   bgColor='#FE7654'
                   color='white'
-                  _hover={{ bg: '#e65c3b' }}
+                  _hover={{ bg: '#e65c3b' }} 
                   _active={{ bg: '#cc4a2d' }}
                   marginLeft="auto"
                   marginRight="auto"
