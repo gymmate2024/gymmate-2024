@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
-import { Box, Button, Flex, Grid, Heading, Input, Radio, RadioGroup, Select, Stack, Text, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { useState } from 'react';
+import { Box, Button, Flex, Grid, Heading, Input, Radio, RadioGroup, Select, Stack, Text, InputGroup, InputRightElement, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@chakra-ui/react";
 import { FaImage, FaUpload, FaUser  , FaEye, FaEyeSlash } from "react-icons/fa";
+import useWalkinStore from '../store/walkin.js';
 
 const WalkinBookingRegister = () => {
     const [showPassword, setShowPassword] = useState({ password: false, confirmPassword: false });
+
+    const setShowRegister = useWalkinStore((state) => state.setShowRegister);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const togglePasswordVisibility = (field) => {
         setShowPassword(prevState => ({
             ...prevState,
             [field]: !prevState[field]
         }));
+    };
+
+    const handleCancel = () => {
+        setShowRegister(false);
+    };
+
+    const handleRegister = () => {
+        onOpen(); // Open the modal when Register is clicked
     };
 
     return (
@@ -99,9 +112,32 @@ const WalkinBookingRegister = () => {
                     </Grid>
                 </Grid>
                 <Flex justify="space-between" mt={6}>
-                    <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md">Cancel</Button>
-                    <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md">Register</Button>
+                    <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleCancel}>Cancel</Button>
+                    <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleRegister}>Register</Button>
                 </Flex>
+
+                <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                    <ModalOverlay />
+                    <Flex justifyContent="center" alignItems="center"> {/* Add this Flex container */}
+                        <ModalContent>
+                            <ModalHeader>Are you sure your information is correct?</ModalHeader>
+                            <ModalBody>
+                                <Text as="ul" listStyleType="disc" ml={4}>
+                                    <li>If any of the information is incorrect, please go back and update it accordingly.</li>
+                                </Text>
+                            </ModalBody>
+                            <ModalFooter display="flex" justifyContent="space-between">
+                                <Button onClick={onClose} bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center">
+                                    Cancel
+                                </Button>
+                                <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center">
+                                    Confirm
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Flex>
+                </Modal>
+
             </Box>
         </Flex>
     )

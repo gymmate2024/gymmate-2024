@@ -1,7 +1,11 @@
 import { Box, Button, Icon, Text, VStack } from "@chakra-ui/react"
 import { MdAccountCircle, MdDashboard, MdSettings } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const SideMenu = () => {
+
+  const navigate = useNavigate(); 
+
   return (
 
     <Box w='20vw' h='100vh'>
@@ -40,12 +44,12 @@ const SideMenu = () => {
                 <Box display="flex" w="100%" alignItems='center'>
                   <Icon as={MdDashboard} w={5} h={5} mr={2} />
                   <Text
-                    onClick=''
                     color="#071434"
                     cursor="pointer"
                     fontSize='lg'
                     fontWeight='semibold'
-                    textAlign="center"  
+                    textAlign="center"
+                    onClick={() => navigate('/dashboard')}  
                   >
                     Dashboard
                   </Text>

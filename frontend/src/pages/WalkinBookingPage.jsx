@@ -1,8 +1,15 @@
 import { Box, Heading, VStack } from "@chakra-ui/react";
 import WalkinBookingOptions from "../components/WalkinBookingOptions";
 import WalkinBookingRegister from "../components/WalkinBookingRegister";
+import WalkinBookingSearch from "../components/WalkinBookingSearch";
+import useWalkinStore from "../store/walkin.js";
 
 const WalkinBookingPage = () => {
+
+    const showRegister = useWalkinStore((state) => state.showRegister);
+
+    const showSearch = useWalkinStore((state) => state.showSearch);
+    
     return (
         <Box 
             bg='gray.300'
@@ -35,8 +42,9 @@ const WalkinBookingPage = () => {
                     alignItems="center" // Vertically center
                     justifyContent="center" // Horizontally center
                 >
-                    {/* <WalkinBookingOptions /> */}
-                    <WalkinBookingRegister/>
+                    {showRegister && <WalkinBookingRegister />}
+                    {showSearch && <WalkinBookingSearch />}
+                    {!showRegister && !showSearch && <WalkinBookingOptions />}
                 </Box>
             </VStack>
         </Box>
