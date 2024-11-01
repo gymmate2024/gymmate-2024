@@ -1,17 +1,15 @@
 import { ChevronLeftIcon } from "@chakra-ui/icons"
-import { Box, Button, Divider, Flex, Heading, IconButton, Input, Select, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Divider, Flex, Heading, IconButton, Text, VStack } from "@chakra-ui/react"
 import useWalkinStore from "../store/walkin.js";
 
 const WalkinBookingOptions = () => {
 
     const setShowRegister = useWalkinStore((state) => state.setShowRegister); // Get the setter function from the store
 
-    const setShowSearch = useWalkinStore((state) => state.setShowSearch);
+    const setShowLogin = useWalkinStore((state) => state.setShowLogin);
 
-    const handleInputKeyDown = (event) => {
-        if (event.key === "Enter") {
-            setShowSearch(true);
-        }
+    const handleLoginClick = () => {
+        setShowLogin(true);
     };
 
     const handleRegisterClick = () => {
@@ -20,7 +18,7 @@ const WalkinBookingOptions = () => {
 
   return (
     <Flex bg="gray.50"align="center" justify="center">
-        <Box bg="white" p={8} rounded="lg" shadow="md" w="full" maxW="3xl">
+        <Box bg="white" p={8} rounded="lg" shadow="md" w="full" maxW="4xl">
             <Flex align="center" mb={6} justify="space-between">
                 <IconButton
                     icon={<ChevronLeftIcon boxSize={6} />}
@@ -34,9 +32,9 @@ const WalkinBookingOptions = () => {
                 </Heading>
             </Flex>
                 <Flex justify="space-between" align="center">
-                <VStack flex="1" textAlign="center" >
+                <VStack flex="1" textAlign="center" whiteSpace="nowrap">
                     <Text color="gray.600" mb={4}>
-                        No, I don’t have a GymMate Account.
+                        No, I don’t have a GymMate account.
                     </Text>
                     <Button 
                         bgColor='#FE7654'
@@ -45,7 +43,7 @@ const WalkinBookingOptions = () => {
                         _active={{ bg: '#cc4a2d' }}
                         size="lg" w="full"
                         onClick={handleRegisterClick}>
-                        Register an account
+                        Register
                     </Button>
                 </VStack>
                 <Flex flexDir="column" align="center" mx={4}>
@@ -55,7 +53,21 @@ const WalkinBookingOptions = () => {
                     </Text>
                     <Divider orientation="vertical" height="16" borderColor="gray.300" />
                 </Flex>
-                <VStack flex="1" textAlign="center">
+                <VStack flex="1" textAlign="center" >
+                    <Text color="gray.600" mb={4} whiteSpace="nowrap">
+                        Yes, I do have a GymMate account.
+                    </Text>
+                    <Button 
+                        bgColor='#FE7654'
+                        color='white'
+                        _hover={{ bg: '#e65c3b' }} 
+                        _active={{ bg: '#cc4a2d' }}
+                        size="lg" w="full"
+                        onClick={handleLoginClick}>
+                        Log In
+                    </Button>
+                </VStack>
+                {/* <VStack flex="1" textAlign="center">
                     <Text color="gray.600" mb={4}>
                         Yes, I do have a GymMate Account.
                     </Text>
@@ -80,7 +92,7 @@ const WalkinBookingOptions = () => {
                             />
                         </Box>
                     </VStack>
-                </VStack>
+                </VStack> */}
             </Flex>
         </Box>
     </Flex>
