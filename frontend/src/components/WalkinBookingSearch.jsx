@@ -45,33 +45,33 @@ const WalkinBookingSearch = () => {
                     <Grid templateColumns="repeat(2, 1fr)" gap={6} colSpan={2}>
                         <Box>
                             <Text mb={2} color="gray.700">Name</Text>
-                            <Input placeholder="ex. Juan Dela Cruz" isReadOnly bg="gray.100" />
+                            <Input isDisabled={true} bg="gray.300" />
                         </Box>
                         <Box>
                             <Text mb={2} color="gray.700">Gender</Text>
-                            <Input placeholder="ex. Male/Female" isReadOnly bg="gray.100" />
+                            <Input  isDisabled={true} bg="gray.300" />
                         </Box>
                         <Box>
                             <Text mb={2} color="gray.700">College & Course</Text>
-                            <Input placeholder="ex. College of Arts" isReadOnly bg="gray.100" />
+                            <Input isDisabled={true} bg="gray.300" />
                         </Box>
                         <Box>
                             <Text mb={2} color="gray.700">Year & Section</Text>
-                            <Input placeholder="ex. 1st Year - Section A" isReadOnly bg="gray.100" />
+                            <Input isDisabled={true} bg="gray.300" />
                         </Box>
                         <Box>
                             <Text mb={2} color="gray.700">UMak Email Address</Text>
-                            <Input placeholder="ex. juan.delacruz@umak.edu.ph" isReadOnly bg="gray.100" />
+                            <Input isDisabled={true} bg="gray.300" />
                         </Box>
                         <Box>
                             <Text mb={2} color="gray.700">UMak Student ID</Text>
-                            <Input placeholder="ex. a12345678" isReadOnly bg="gray.100" />
+                            <Input isDisabled={true} bg="gray.300" />
                         </Box>
                     </Grid>
                 </Grid>
                 <Flex justify="space-between" mt={6}>
                     <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md"  onClick={handleCancel}>Cancel</Button>
-                    <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md">Register</Button>
+                    <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md">Proceed</Button>
                 </Flex>
             </Box>
         </Flex>

@@ -1,15 +1,32 @@
-import { useState } from 'react';
-import { Box, Button, Flex, Grid, Heading, Input, Radio, RadioGroup, Select, Stack, Text, InputGroup, InputRightElement, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@chakra-ui/react";
+import { useEffect, useState } from 'react';
+import { Box, Button, Flex, Grid, Heading, Input, Radio, RadioGroup, Select, Stack, Text, InputGroup, InputRightElement, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Center } from "@chakra-ui/react";
 import { FaImage, FaUpload, FaUser  , FaEye, FaEyeSlash } from "react-icons/fa";
 import useWalkinStore from '../store/walkin.js';
+import { PiConfettiFill } from "react-icons/pi";
 
 const WalkinBookingRegister = () => {
     const [showPassword, setShowPassword] = useState({ password: false, confirmPassword: false });
+    
+    const [isRegistered, setIsRegistered] = useState(false);
+   
+    const [countdown, setCountdown] = useState(5);
 
     const setShowRegister = useWalkinStore((state) => state.setShowRegister);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-
+    
+    useEffect(() => {
+        let timer;
+        if (isRegistered && countdown > 0) {
+            timer = setInterval(() => {
+                setCountdown((prev) => prev - 1);
+            }, 1000);
+        } else if (countdown === 0) {
+            setShowRegister(false); // Hide current component and show WalkinBookingOptions
+        }
+        return () => clearInterval(timer);
+    }, [isRegistered, countdown, setShowRegister]);
+    
     const togglePasswordVisibility = (field) => {
         setShowPassword(prevState => ({
             ...prevState,
@@ -25,9 +42,14 @@ const WalkinBookingRegister = () => {
         onOpen(); // Open the modal when Register is clicked
     };
 
+    const handleConfirm = () => {
+        setIsRegistered(true); // Update registration status
+        onClose(); // Close the modal
+    };
+
     return (
         <Flex justify="center" align="center" bg="#F5F7FA">
-            <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="4xl">
+            <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="4xl" display={isRegistered ? 'none' : 'block'}>
                 <Heading as="h1" size="md" mb={6}>Register a GymMate account</Heading>
                 <Grid templateColumns="1fr 2fr" gap={6}>
                     <Flex direction="column" align="center">
@@ -115,30 +137,37 @@ const WalkinBookingRegister = () => {
                     <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleCancel}>Cancel</Button>
                     <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleRegister}>Register</Button>
                 </Flex>
-
-                <Modal isOpen={isOpen} onClose={onClose} isCentered>
-                    <ModalOverlay />
-                    <Flex justifyContent="center" alignItems="center"> {/* Add this Flex container */}
-                        <ModalContent>
-                            <ModalHeader>Are you sure your information is correct?</ModalHeader>
-                            <ModalBody>
-                                <Text as="ul" listStyleType="disc" ml={4}>
-                                    <li>If any of the information is incorrect, please go back and update it accordingly.</li>
-                                </Text>
-                            </ModalBody>
-                            <ModalFooter display="flex" justifyContent="space-between">
-                                <Button onClick={onClose} bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center">
-                                    Cancel
-                                </Button>
-                                <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center">
-                                    Confirm
-                                </Button>
-                            </ModalFooter>
-                        </ModalContent>
-                    </Flex>
-                </Modal>
-
             </Box>
+
+            <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="4xl" display={isRegistered ? 'block' : 'none'}>
+                <Center mb={4}><PiConfettiFill color='#FE7654' size={120}/></Center>
+                <Heading as="h1" size="md" mb={6}>Your account has been successfully registered!</Heading>
+                <Center mt={20}>
+                    <Text>Returning in... {countdown}</Text>
+                </Center>
+            </Box>
+
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                <ModalOverlay />
+                <Flex justifyContent="center" alignItems="center"> {/* Add this Flex container */}
+                    <ModalContent>
+                        <ModalHeader>Are you sure your information is correct?</ModalHeader>
+                        <ModalBody>
+                            <Text as="ul" listStyleType="disc" ml={4}>
+                                <li>If any of the information is incorrect, please go back and update it accordingly.</li>
+                            </Text>
+                        </ModalBody>
+                        <ModalFooter display="flex" justifyContent="space-between">
+                            <Button onClick={onClose} bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center">
+                                Cancel
+                            </Button>
+                            <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center" onClick={handleConfirm}>
+                                Confirm
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Flex>
+            </Modal>
         </Flex>
     )
 }
