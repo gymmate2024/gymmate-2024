@@ -1,9 +1,11 @@
-import { Box, Button, Center, Divider, Flex, Grid, Heading, IconButton, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, Flex, Grid, Heading, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, Text, useDisclosure, VStack } from "@chakra-ui/react";
 //import useWalkinStore from "../store/walkin.js";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { FaEye, FaEyeSlash, FaImage, FaUpload, FaUser } from "react-icons/fa";
 import { PiConfettiFill } from "react-icons/pi";
 import { useEffect, useState } from "react";
+import { MdEmail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const WalkinBookingPage = () => {
 
@@ -11,6 +13,7 @@ const WalkinBookingPage = () => {
     const [isRegistered, setIsRegistered] = useState(false);
     const [countdown, setCountdown] = useState(5);
     const [showRegister, setShowRegister] = useState(false); 
+    const [showLogin, setShowLogin] = useState(false); 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     useEffect(() => {
@@ -43,8 +46,13 @@ const WalkinBookingPage = () => {
         setShowRegister(false); 
     };
 
+    const handleLoginCancel = () => {
+        setShowLogin(false); 
+    };
+
     const handleRegisterClick = () => {
-        setShowRegister(true); 
+        setShowRegister(true);
+        setShowLogin(false);
     };
 
     const handleRegister = () => {
@@ -54,6 +62,11 @@ const WalkinBookingPage = () => {
     const handleConfirm = () => {
         setIsRegistered(true); // Update registration status
         onClose(); // Close the modal
+    };
+
+    const handleLoginClick = () => {
+        setShowLogin(true); // Show the login form
+        setShowRegister(false); // Optionally hide the register option if needed
     };
     
     return (
@@ -88,9 +101,9 @@ const WalkinBookingPage = () => {
                     alignItems="center"
                     justifyContent="center" >
 
-                    {!showRegister && !isRegistered && ( 
-                    <Flex bg="gray.50"align="center" justify="center" display={''}>
-                        <Box bg="white" p={8} rounded="lg" shadow="md" w="full" maxW="4xl">
+                    {!showRegister && !isRegistered && !showLogin &&  ( 
+                    <Flex align="center" justify="center">
+                        <Box p={8} w="full" maxW="4xl">
                             <Flex align="center" mb={6} justify="space-between">
                                 <IconButton
                                     icon={<ChevronLeftIcon boxSize={6} />}
@@ -135,7 +148,7 @@ const WalkinBookingPage = () => {
                                         _hover={{ bg: '#e65c3b' }} 
                                         _active={{ bg: '#cc4a2d' }}
                                         size="lg" w="full"
-                                        onClick={''}>
+                                        onClick={handleLoginClick}>
                                         Log In
                                     </Button>
                                 </VStack>
@@ -145,12 +158,12 @@ const WalkinBookingPage = () => {
                     )}
 
                     {showRegister && (
-                    <Flex justify="center" align="center" bg="#F5F7FA">
-                        <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="4xl" display={isRegistered ? 'none' : 'block'}>
-                            <Heading as="h1" size="md" mb={6}>Register a GymMate account</Heading>
-                            <Grid templateColumns="1fr 2fr" gap={6}>
+                    <Flex justify="center" align="center" >
+                        <Box p={8} w="full" maxW="4xl" display={isRegistered ? 'none' : 'block'}>
+                            <Heading as="h1" size="md" mb={10} >Register a GymMate account</Heading>
+                            <Grid templateColumns="1fr 2fr" gap={10}>
                                 <Flex direction="column" align="center">
-                                    <Box position="relative" w="40" h="40" bg="gray.200" rounded="md" display="flex" alignItems="center" justifyContent="center" mb={4}>
+                                    <Box position="relative" w="40" h="40" bg="white" rounded="md" boxShadow="lg" display="flex" alignItems="center" justifyContent="center" mb={4}>
                                         <FaUser   size="6rem" color="gray.400" />
                                         <Button position="absolute" bottom="0" right="0" bg="#071434" color="white" _hover={{ bg: '#071434', color: 'white' }} _active={{ bg: 'gray.100', color: 'white' }} p={2} rounded="md" w="8" h="8" display="flex" alignItems="center" justifyContent="center">
                                             <FaImage />
@@ -163,40 +176,40 @@ const WalkinBookingPage = () => {
                                 <Grid templateColumns="repeat(2, 1fr)" gap={6} colSpan={2}>
                                     <Box>
                                         <Text mb={2} color="gray.700">Name</Text>
-                                        <Input placeholder="ex. Juan Dela Cruz" />
+                                        <Input bg="white" variant="filled" boxShadow="lg" placeholder="ex. Juan Dela Cruz" />
                                     </Box>
                                     <Box>
                                         <Text mb={2} color="gray.700">Gender</Text>
                                         <RadioGroup>
                                             <Stack direction="row">
-                                                <Radio value="male">Male</Radio>
-                                                <Radio value="female">Female</Radio>
+                                                <Radio bg="white" variant="filled" boxShadow="lg" value="male">Male</Radio>
+                                                <Radio bg="white" variant="filled" boxShadow="lg" value="female">Female</Radio>
                                             </Stack>
                                         </RadioGroup>
                                     </Box>
                                     <Box>
                                         <Text mb={2} color="gray.700">College & Course</Text>
-                                        <Select placeholder="Choose College & Course"/>
+                                        <Select bg="white" variant="filled" boxShadow="lg" placeholder="Choose College & Course"/>
                                     </Box>
                                     <Box>
                                         <Text mb={2} color="gray.700">Year & Section</Text>
-                                        <Select placeholder="Choose Year & Section" />
+                                        <Select bg="white" variant="filled" boxShadow="lg" placeholder="Choose Year & Section" />
                                     </Box>
                                     <Box>
                                         <Text mb={2} color="gray.700">UMak Email Address</Text>
-                                        <Input placeholder="ex. juan.delacruz@umak.edu.ph" />
+                                        <Input bg="white" variant="filled" boxShadow="lg" placeholder="ex. juan.delacruz@umak.edu.ph" />
                                     </Box>
                                     <Box>
                                         <Text mb={2} color="gray.700">UMak Student ID</Text>
-                                        <Input placeholder="ex. a12345678" />
+                                        <Input bg="white" variant="filled" boxShadow="lg" placeholder="ex. a12345678" />
                                     </Box>
                                     <Box>
                                         <Text mb={2} color="gray.700">Password</Text>
                                         <InputGroup>
-                                            <Input 
+                                            <Input
                                                 type={showPassword.password ? 'text' : 'password'} 
                                                 placeholder="Enter your password" 
-                                                variant="outline" // Use outline variant
+                                                bg="white" variant="filled" boxShadow="lg"
                                             />
                                             <InputRightElement>
                                                 <Button 
@@ -215,7 +228,7 @@ const WalkinBookingPage = () => {
                                             <Input 
                                                 type={showPassword.confirmPassword ? 'text' : 'password'} 
                                                 placeholder="Confirm your password" 
-                                                variant="outline" // Use outline variant
+                                                bg="white" variant="filled" boxShadow="lg"
                                             />
                                             <InputRightElement>
                                                 <Button 
@@ -230,7 +243,7 @@ const WalkinBookingPage = () => {
                                     </Box>
                                 </Grid>
                             </Grid>
-                            <Flex justify="space-between" mt={6}>
+                            <Flex justify="space-between" mt={20}>
                                 <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleCancel}>Cancel</Button>
                                 <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleRegister}>Register</Button>
                             </Flex>
@@ -239,10 +252,10 @@ const WalkinBookingPage = () => {
                     )}
 
                     {isRegistered && (
-                    <Flex justify="center" align="center" bg="#F5F7FA">
-                        <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="4xl" display={isRegistered ? 'block' : 'none'}>
-                            <Center mb={4}><PiConfettiFill color='#FE7654' size={120}/></Center>
-                            <Heading as="h1" size="md" mb={6}>Your account has been successfully registered!</Heading>
+                    <Flex justify="center" align="center">
+                        <Box p={8} w="full" maxW="4xl" display={isRegistered ? 'block' : 'none'}>
+                            <Center mb={6}><PiConfettiFill color='#FE7654' size={160}/></Center>
+                            <Heading as="h1" size="lg" mb={6}>Your account has been successfully registered!</Heading>
                             <Center mt={20}>
                                 <Text>Returning in... {countdown}</Text>
                             </Center>
@@ -250,6 +263,75 @@ const WalkinBookingPage = () => {
                     </Flex>
                     )}
 
+                    {showLogin && (
+                    <Flex justify="center" align="center">
+                        <Box p={8} w="full" maxW="4xl" display={isRegistered ? 'none' : 'block'}>
+                            <Heading as="h1" size="md" mb={10}>Log in a GymMate account</Heading>
+                            <Flex w='100%' justify="space-between" mb={6}>
+                                {/* Email Input */}
+                                <InputGroup w='48%'>
+                                    <InputLeftElement 
+                                        color='gray.500' 
+                                        pointerEvents='none' 
+                                        h='50px' 
+                                        display='flex' 
+                                        alignItems='center'>
+                                        <MdEmail />
+                                    </InputLeftElement>
+                                    <Input
+                                        placeholder='Email'
+                                        variant="outline" 
+                                        boxShadow='lg' 
+                                        rounded='md'
+                                        bg="white"
+                                        h='50px' // Set height to match InputLeftElement
+                                    />
+                                </InputGroup>
+
+                                {/* Password Input */}
+                                <InputGroup w='48%'>
+                                    <InputLeftElement 
+                                        color='gray.500' 
+                                        pointerEvents='none' 
+                                        h='50px' 
+                                        display='flex' 
+                                        alignItems='center'>
+                                        <RiLockPasswordFill />
+                                    </InputLeftElement>
+                                    <Input
+                                        variant="outline" 
+                                        pr='4.5rem'
+                                        type={showPassword.password ? 'text' : 'password'} 
+                                        placeholder='Password'
+                                        boxShadow='lg' 
+                                        rounded='md'
+                                        h='50px'
+                                        bg="white"
+                                    />
+                                    <InputRightElement 
+                                        width='4.5rem' 
+                                        h='50px' 
+                                        display='flex' 
+                                        alignItems='center'>
+                                        <Button 
+                                            color="gray.500" 
+                                            variant='ghost' 
+                                            onClick={() => togglePasswordVisibility('password')} 
+                                            size='md'
+                                        >
+                                            {showPassword.password ? <FaEyeSlash /> : <FaEye />}
+                                        </ Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </Flex>
+
+                            <Flex justify="space-between" mt={20}>
+                                <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleLoginCancel}>Cancel</Button>
+                                <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={''}>Log In</Button>
+                            </Flex>
+                        </Box>
+                    </Flex>
+                    )}
                     
                     
                     <Modal isOpen={isOpen} onClose={onClose} isCentered>
