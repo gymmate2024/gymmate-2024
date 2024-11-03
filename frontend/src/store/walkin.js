@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 
 const useWalkinStore = create((set) => ({
-    showRegister: false,
-    showSearch: false,
-    setShowRegister: (value) => set({ showRegister: value }),
-    setShowSearch: (value) => set({ showSearch: value }),
+    currentDate: new Date(),
+    selectedDay: null,
+    setCurrentDate: (date) => set({ currentDate: date }),
+    setSelectedDay: (day) => set({ selectedDay: day }),
+    selectedTime: null,
+    setSelectedTime: (time) => set({ selectedTime: time }),
 }));
 
 export default useWalkinStore;
