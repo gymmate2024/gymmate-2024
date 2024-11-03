@@ -8,6 +8,7 @@ const theme = extendTheme({
   fonts: {
     heading: "Inter, sans-serif",
     body: "Inter, sans-serif",
+    color:  "#071434"
   },
 });
 
