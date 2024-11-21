@@ -1,13 +1,56 @@
-import { Button, Center, Flex, HStack, Input, InputGroup, InputLeftElement, InputRightElement, Text, VStack } from "@chakra-ui/react";
+import { useToast, Button, Center, Flex, HStack, Input, InputGroup, InputLeftElement, InputRightElement, Text, VStack } from "@chakra-ui/react";
 import { Cloudinary } from '@cloudinary/url-gen';
 import { AdvancedImage } from '@cloudinary/react';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { BiSolidShow } from "react-icons/bi";
 import { BiSolidHide } from "react-icons/bi";
-import React from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
+import { useAdminStore } from '../store/admin.js'; 
+
+const LoginPage = () => {
+const cld = new Cloudinary({ cloud: { cloudName: 'dvbl1rjtc' } });
+const [showPassword, setShowPassword] = useState(false);
+const handleShowPassword = () => setShowPassword(!showPassword);
+const navigate = useNavigate(); 
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const { loginAdmin } = useAdminStore()
+const toast = useToast()
+
+
+const handleForgotPassword = () => {
+  // Handle the forgot password logic here
+  console.log("Forgot Password clicked");
+};
+
+const handleRegister = () => {
+  // Handle the register logic here
+  console.log("Register clicked");
+};
+
+const handleLogin = async () => {
+  const {success, message} = await loginAdmin(email, password);
+  if (!success) {
+    toast({
+      title: "Error",
+      description: message,
+      status: "error",
+      duration: 3000,
+      isClosable: true
+    })
+  } else {
+    toast({
+      title: "Success",
+      description: message,
+      status: "success",
+      duration: 3000,
+      isClosable: true
+    })
+  }
+};
 
 const AuthInput = ({ showPassword, handleShowPassword }) => (
   <>
@@ -76,22 +119,6 @@ AuthInput.propTypes = {
   handleShowPassword: PropTypes.func.isRequired,
 };
 
-const handleForgotPassword = () => {
-  // Handle the forgot password logic here
-  console.log("Forgot Password clicked");
-};
-
-const handleRegister = () => {
-  // Handle the register logic here
-  console.log("Register clicked");
-};
-
-const LoginPage = () => {
-const cld = new Cloudinary({ cloud: { cloudName: 'dvbl1rjtc' } });
-const [showPassword, setShowPassword] = React.useState(false);
-const handleShowPassword = () => setShowPassword(!showPassword);
-const navigate = useNavigate(); 
-
 
   return (
     <Flex color='white'>
@@ -135,7 +162,7 @@ const navigate = useNavigate();
           color='white'
           _hover={{ bg: '#e65c3b' }} 
           _active={{ bg: '#cc4a2d' }}
-          onClick={() => navigate('/dashboard')}>
+          onClick={handleLogin}>
             Log In
         </Button>
         <HStack spacing='2' w='50%' justifyContent='space-between'>

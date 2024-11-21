@@ -1,6 +1,32 @@
 import mongoose from "mongoose";
 import Admin from "../models/admin.model.js";
 
+export const loginAdmin = async (req, res) => {
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: "Email and password are required." });
+    }
+  
+    try {
+      const admin = await Admin.findOne({ _umakEmail: email });
+      if (!admin) {
+        return res.status(401).json({ success: false, message: "Invalid credentials." });
+      }
+  
+      const isMatch = await bcrypt.compare(password, admin._password);
+      if (!isMatch) {
+        return res.status(401).json({ success: false, message: "Invalid credentials." });
+      }
+  
+      // You can generate a token here if needed (e.g., JWT)
+      res.status(200).json({ success: true, user: { id: admin._id, name: admin._fName } });
+    } catch (error) {
+      console.error("Error during admin login: ", error.message);
+      res.status(500).json({ success: false, message: "Server error." });
+    }
+  };
+
 export const getAdmins = async (req, res) => {
     try {
         const admins = await Admin.find({});
