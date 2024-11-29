@@ -1,7 +1,7 @@
 import { Box, Button, Icon, Text, VStack, useToast } from "@chakra-ui/react"
 import { MdAccountCircle, MdDashboard, MdSettings } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useAdminStore } from '../../store/admin.js';
+import { useAdminStore } from '../store/admin.js';
 
 const SideMenu = () => {
 
@@ -21,7 +21,7 @@ const SideMenu = () => {
     });
 
     // Navigate to the login page
-    navigate('/login');
+    navigate('/');
   };
 
   return (
