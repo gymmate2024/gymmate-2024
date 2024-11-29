@@ -1,8 +1,14 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // loginStore.js
 import create from 'zustand';
 
 const useAdminStore = create((set) => ({
+=======
+import { create } from 'zustand';
+
+export const useAdminStore = create((set, get) => ({
+>>>>>>> Stashed changes
 =======
 import { create } from 'zustand';
 
@@ -28,6 +34,9 @@ export const useAdminStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await fetch('http://localhost:5000/api/admins/login', {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -50,6 +59,9 @@ export const useAdminStore = create((set, get) => ({
     } catch (error) {
       set({ error: 'An error occurred during login: ' + error.message, isLoading: false });
       return { success: false, message: 'An error occurred during login.' };
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
   },

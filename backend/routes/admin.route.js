@@ -1,5 +1,6 @@
 import express from "express";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import mongoose from "mongoose";
 import Admin from "../models/admin.model.js";
 import { createAdmin, getAdmins } from "../controller/admin.controller.js";
@@ -7,6 +8,8 @@ import { createAdmin, getAdmins } from "../controller/admin.controller.js";
 const router = express.Router();
 
 =======
+=======
+>>>>>>> Stashed changes
 import { loginAdmin, logoutAdmin, createAdmin, getAdmins } from "../controller/admin.controller.js";
 
 const router = express.Router();

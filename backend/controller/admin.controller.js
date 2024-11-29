@@ -59,6 +59,9 @@ export const loginAdmin = async (req, res) => {
     }
 };
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 export const getAdmins = async (req, res) => {
     try {

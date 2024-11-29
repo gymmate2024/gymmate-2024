@@ -4,6 +4,7 @@ import { AdvancedImage } from '@cloudinary/react';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { BiSolidShow } from "react-icons/bi";
 import { BiSolidHide } from "react-icons/bi";
 import React from "react";
@@ -13,6 +14,11 @@ import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+=======
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+>>>>>>> Stashed changes
 import { useAdminStore } from '../store/admin.js';
 import PropTypes from 'prop-types';
 
@@ -33,6 +39,7 @@ const LoginPage = () => {
     // Log the inputs for debugging
     console.log("Email:", email);
     console.log("Password:", password);
+<<<<<<< Updated upstream
 
     const result = await loginAdmin(email, password);
     const { success = false, message = "An unexpected error occurred." } = result || {}; // Use fallback values
@@ -55,12 +62,13 @@ const handleForgotPassword = () => {
   // Handle the forgot password logic here
   console.log("Forgot Password clicked");
 };
+=======
+>>>>>>> Stashed changes
 
-const handleRegister = () => {
-  // Handle the register logic here
-  console.log("Register clicked");
-};
+    const result = await loginAdmin(email, password);
+    const { success = false, message = "An unexpected error occurred." } = result || {}; // Use fallback values
 
+<<<<<<< Updated upstream
 const LoginPage = () => {
 const cld = new Cloudinary({ cloud: { cloudName: 'dvbl1rjtc' } });
 const [showPassword, setShowPassword] = React.useState(false);
@@ -68,10 +76,27 @@ const handleShowPassword = () => setShowPassword(!showPassword);
 const navigate = useNavigate(); 
 
 =======
+=======
+    toast({
+      title: success ? "Success" : "Error",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 3000,
+      isClosable: true
+    });
+
+    if (success) {
+      setEmail(''); // Reset email
+      setPassword(''); // Reset email
+
+>>>>>>> Stashed changes
       // Navigate to the dashboard or another page
       navigate('/dashboard');
     }
   };
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   return (
@@ -82,6 +107,7 @@ const navigate = useNavigate();
                 cldImg={cld.image('bg-01_bcoz28').format('auto').quality('auto')}
                 style={{ width: '100%', height: '100%', objectFit: 'fill' }}
             />
+<<<<<<< Updated upstream
         </Center>
         <Center w='50vw' h='100vh' bg='gray.300' m='0' p='0'>
             <VStack w='100%' spacing='10'>
@@ -158,6 +184,51 @@ const navigate = useNavigate();
       </VStack>
     </Center>
 =======
+>>>>>>> Stashed changes
+=======
+        </Center>
+        <Center w='50vw' h='100vh' bg='gray.300' m='0' p='0'>
+            <VStack w='100%' spacing='10'>
+                <Center m='0' p='0'>
+                    <AdvancedImage
+                        draggable={false}
+                        cldImg={cld.image('clipboard-image-1729707349_e6xxhf').format('auto').quality('auto')}
+                        style={{ width: '50%', height: '50%' }}
+                    />
+                </Center>
+                <VStack w='50%' justify="center" mb={6} spacing={5}>
+                    <InputField
+                        placeholder='Email'
+                        icon={<MdEmail />}
+                        value={email}
+                        onChange={handleInputChange(setEmail)}
+                    />
+                    <InputField
+                        placeholder='Password'
+                        icon={<RiLockPasswordFill />}
+                        value={password}
+                        type={showPassword ? 'text' : 'password'}
+                        onChange={handleInputChange(setPassword)}
+                        toggleVisibility={() => setShowPassword(prev => !prev)}
+                        showPassword={showPassword}
+                    />
+                </VStack>
+                <Button
+                    w='50%'
+                    h='50px'
+                    bgColor='#FE7654'
+                    color='white'
+                    _hover={{ bg: '#e65c3b' }}
+                    _active={{ bg: '#cc4a2d' }}
+                    onClick={handleLogin}>
+                    Log In
+                </Button>
+                <HStack spacing='2' w='50%' justifyContent='space-between'>
+                    <Text onClick={() => console.log("Forgot Password clicked")} color="#071434" cursor="pointer" fontSize='sm'>Forgot password?</Text>
+                    <Text onClick={() => console.log("Register clicked")} color="#071434" cursor="pointer" fontSize='sm'>Register an account?</Text>
+                </HStack>
+            </VStack>
+        </Center>
 >>>>>>> Stashed changes
     </Flex>
   );
