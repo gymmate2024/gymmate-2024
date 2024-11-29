@@ -1,30 +1,10 @@
-import { Box, Button, Icon, Text, VStack, useToast  } from "@chakra-ui/react"
+import { Box, Button, Icon, Text, VStack } from "@chakra-ui/react"
 import { MdAccountCircle, MdDashboard, MdSettings } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useAdminStore } from '../store/admin.js';
 
 const SideMenu = () => {
 
   const navigate = useNavigate(); 
-  const { logout } = useAdminStore();
-  const toast = useToast();
-
-  const handleLogout = () => {
-    // Call the logout function from the Zustand store
-    logout(); // Reset the user state
-
-    // Show a toast notification
-    toast({
-      title: "Success",
-      description: "Logout successful.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-
-    // Navigate to the login page
-    navigate('/');
-  };
 
   return (
 
@@ -101,7 +81,6 @@ const SideMenu = () => {
                   _active={{ bg: '#cc4a2d' }}
                   marginLeft="auto"
                   marginRight="auto"
-                  onClick={handleLogout}
                 >
                   Log out
                 </Button>

@@ -2,7 +2,6 @@ import express from "express"
 import dotenv from "dotenv"
 import { connectDB } from "./config/db.js"
 import adminsRoutes from "./routes/admin.route.js"
-import cors from 'cors';
 
 dotenv.config()
 
@@ -16,5 +15,4 @@ app.listen(PORT, () => {
     console.log("Server started at http://localhost:" + PORT);
 });
 
-app.use(cors());
 app.use("/api/admins", adminsRoutes)
