@@ -2,30 +2,53 @@ import mongoose from "mongoose";
 import Admin from "../models/admin.model.js";
 
 export const loginAdmin = async (req, res) => {
-    const { email, password } = req.body;
-  
-    if (!email || !password) {
-      return res.status(400).json({ success: false, message: "Email and password are required." });
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: "Email and password are required." });
+  }
+
+  try {
+    const admin = await Admin.findOne({ _umakEmail: email });
+    if (!admin) {
+      return res.status(401).json({ success: false, message: "Invalid Email." });
     }
-  
-    try {
-      const admin = await Admin.findOne({ _umakEmail: email });
+
+    const isMatch = await Admin.findOne({ _password: password });
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: "Invalid Password." });
+    }
+
+    // Set _activeStat to true upon successful login
+    admin._activeStat = true;
+    await admin.save(); // Save the updated admin document
+
+    res.status(200).json({ success: true, user: { id: admin._id, name: admin._fName } });
+  } catch (error) {
+    console.error("Error during admin login: ", error.message);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+export const logoutAdmin = async (req, res) => {
+  const { userId } = req.body; // Assuming you send the user ID when logging out
+
+  try {
+      const admin = await Admin.findById(userId);
       if (!admin) {
-        return res.status(401).json({ success: false, message: "Invalid credentials." });
+          return res.status(404).json({ success: false, message: "Admin not found." });
       }
-  
-      const isMatch = await bcrypt.compare(password, admin._password);
-      if (!isMatch) {
-        return res.status(401).json({ success: false, message: "Invalid credentials." });
-      }
-  
-      // You can generate a token here if needed (e.g., JWT)
-      res.status(200).json({ success: true, user: { id: admin._id, name: admin._fName } });
-    } catch (error) {
-      console.error("Error during admin login: ", error.message);
+
+      // Set _activeStat to false upon logout
+      admin._activeStat = false;
+      await admin.save(); // Save the updated admin document
+
+      res.status(200).json({ success: true, message: "Logout successful." });
+  } catch (error) {
+      console.error("Error during admin logout: ", error.message);
       res.status(500).json({ success: false, message: "Server error." });
-    }
-  };
+  }
+};
 
 export const getAdmins = async (req, res) => {
     try {
