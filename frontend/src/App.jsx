@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/login/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import SideMenu from "./components/SideMenu";
 import SchedulePage from "./pages/SchedulePage";
