@@ -60,7 +60,7 @@ const ScheduleCalendar = () => {
     const renderWeekDays = () => {
         const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         return weekDays.map((day, index) => (
-            <Box key={index} textAlign="center" fontWeight="light">
+            <Box  key={index} textAlign="center" fontWeight="light">
                 {day}
             </Box>
         ));
@@ -96,7 +96,7 @@ const ScheduleCalendar = () => {
                 <Grid templateColumns="repeat(7, 1fr)" gap={2}>
                     {renderWeekDays()}
                 </Grid>
-                <Grid templateColumns="repeat(7, 1fr)" gap={2}>
+                <Grid templateColumns="repeat(7, 1fr)" gap={2} >
                     {renderDays()}
                 </Grid>
             </Box>
