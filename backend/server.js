@@ -1,7 +1,8 @@
-import express from "express"
-import dotenv from "dotenv"
-import { connectDB } from "./config/db.js"
-import adminsRoutes from "./routes/admin.route.js"
+import express from "express";
+import dotenv from "dotenv";
+import { connectDB } from "./config/db.js";
+import adminsRoutes from "./routes/admin.route.js";
+import scheduleRoutes from "./routes/schedule.route.js"; // Import the schedule routes
 import cors from 'cors';
 
 dotenv.config()
@@ -18,3 +19,4 @@ app.listen(PORT, () => {
 
 app.use(cors());
 app.use("/api/admins", adminsRoutes)
+app.use("/api/schedules", scheduleRoutes);
