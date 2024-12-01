@@ -5,7 +5,7 @@ import useScheduleStore from '../store/schedule.js';
 import { FaCalendarPlus } from "react-icons/fa";
 
 const ScheduleTimeSlots = () => {
-    const { selectedDay,formattedDate, scheduleData, createSchedule, fetchScheduleByDate } = useScheduleStore();
+    const { selectedDay,formattedDate, scheduleData, createSchedule, fetchScheduleByDate, updateSchedule } = useScheduleStore();
     const [showButtons, setShowButtons] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(null); // State for selected time slot
@@ -87,6 +87,41 @@ const ScheduleTimeSlots = () => {
         }
     };
 
+    const handleUpdate = async () => {
+        if (selectedSlot) {
+            // Create the updated time slot object
+            const updatedTimeSlot = {
+                _startTime: selectedSlot._startTime,
+                _availableSlots: availableSlots,
+                _status: status,
+            };
+    
+            // Call the updateSchedule function from the Zustand store
+            const response = await updateSchedule(scheduleData._id, updatedTimeSlot);
+    
+            // Close the modal
+            onDetailsClose();
+    
+            // Show a success or error toast based on the response
+            if (response.success) {
+                toast({
+                    title: "Slot Updated",
+                    description: "The time slot has been updated successfully.",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            } else {
+                toast({
+                    title: "Update Failed",
+                    description: response.message || "An error occurred while updating the time slot.",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
+        }
+    };
     
 
     return (
@@ -131,8 +166,9 @@ const ScheduleTimeSlots = () => {
                                 mb={2}
                             >
                                 <VStack spacing={5} align="center">
-                                    <Heading size='sm'>{`${slot._startTime} - ${slot._endTime}`}</Heading>
-                                    <Text size='sm'>Available Slot/s: {slot._availableSlots}</Text>
+                                    <Heading fontSize='sm'>{`${slot._startTime} - ${slot._endTime}`}</Heading>
+                                    <Text fontSize='sm'>Available Slot/s: {slot._availableSlots}</Text>
+                                    <Text fontSize='xs' fontWeight='extrabold' >Status: {slot._status}</Text>
                                 </VStack>
                             </Button>
                         ))}
@@ -151,7 +187,7 @@ const ScheduleTimeSlots = () => {
                                 <VStack spacing={4} >
                                     <Text fontWeight="bold">{`${selectedSlot._startTime} - ${selectedSlot._endTime}`}</Text>
                                     <Flex alignItems="center" gap={2}>
-                                        <Text>{`Available Slots: `}</Text>
+                                        <Text>{`Available Slot/s: `}</Text>
                                         <Button bg="white" boxShadow="md" onClick={decrementSlots} isDisabled={availableSlots <= 0}>-</Button>
                                         <Text>{availableSlots}</Text>
                                         <Button bg="white" boxShadow="md" onClick={incrementSlots} isDisabled={availableSlots >= 99}>+</Button>
@@ -170,7 +206,7 @@ const ScheduleTimeSlots = () => {
                                             <option value="Available">Available</option>
                                             <option value="Fully Booked">Fully Booked</option>
                                             <option value="Under Maintenance">Under Maintenance</option>
-                                            <option value="Reserved for Class">Reserved for Class</option>
+                                            <option value="Reserved">Reserved</option>
                                         </Select>
                                     </Flex>
                                 </VStack>
@@ -180,7 +216,7 @@ const ScheduleTimeSlots = () => {
                             <Button onClick={onDetailsClose} bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center">
                                 Cancel
                             </Button>
-                            <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center" onClick={""}>
+                            <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center" onClick={handleUpdate}>
                                 Update
                             </Button>
                         </ModalFooter>

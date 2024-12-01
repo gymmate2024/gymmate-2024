@@ -110,7 +110,34 @@ const useScheduleStore = create((set) => ({
             console.error("Error creating schedule:", error);
         }
     },
-
+    
+    updateSchedule: async (scheduleId, timeSlot) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/schedules/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    scheduleId,
+                    timeSlot,
+                }),
+            });
+    
+            const data = await response.json(); // Get the response data
+    
+            if (response.ok) {
+                set({ scheduleData: data.data }); // Update the schedule data in the store
+                return { success: true }; // Return success
+            } else {
+                console.error("Failed to update schedule:", data);
+                return { success: false, message: data.message || "Failed to update schedule." }; // Return failure message
+            }
+        } catch (error) {
+            console.error("Error updating schedule:", error);
+            return { success: false, message: "An error occurred while updating the schedule." }; // Return error message
+        }
+    },
     
 }));
 

@@ -35,3 +35,38 @@ export const createSchedule = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error." });
     }
 };
+
+// Function to update a schedule time slot
+export const updateSchedule = async (req, res) => {
+    const { scheduleId, timeSlot } = req.body; // Get the schedule ID and time slot data from the request body
+
+    if (!scheduleId || !timeSlot) {
+        return res.status(400).json({ success: false, message: "Schedule ID and time slot data are required." });
+    }
+
+    try {
+        // Find the schedule by ID
+        const schedule = await Schedule.findById(scheduleId);
+        if (!schedule) {
+            return res.status(404).json({ success: false, message: "Schedule not found." });
+        }
+
+        // Find the index of the time slot to update
+        const slotIndex = schedule.timeSlots.findIndex(slot => slot._startTime === timeSlot._startTime);
+        if (slotIndex === -1) {
+            return res.status(404).json({ success: false, message: "Time slot not found." });
+        }
+
+        // Update the time slot with the new data
+        schedule.timeSlots[slotIndex]._availableSlots = timeSlot._availableSlots;
+        schedule.timeSlots[slotIndex]._status = timeSlot._status;
+
+        // Save the updated schedule document
+        await schedule.save();
+
+        res.status(200).json({ success: true, message: "Time slot updated successfully.", data: schedule });
+    } catch (error) {
+        console.error("Error updating schedule:", error.message);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+};
