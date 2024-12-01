@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon, QuestionIcon } from '@chakra-ui/icon
 import useScheduleStore from "../store/schedule.js"; // Import the Zustand store
 
 const ScheduleCalendar = () => {
-    const { currentDate, selectedDay, setCurrentDate, setSelectedDay, fetchScheduleByDate } = useScheduleStore();
+    const { currentDate,setFormattedDate, selectedDay, setCurrentDate, setSelectedDay, fetchScheduleByDate } = useScheduleStore();
     const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
     const getFirstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
 
@@ -23,6 +23,7 @@ const ScheduleCalendar = () => {
         // Log the selected day, month, and year in yyyy-mm-dd format
         const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
         const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+        setFormattedDate(formattedDate)
         console.log(`You pressed: ${formattedDate}`); // Logs in yyyy-mm-dd format
 
         // Fetch schedule data for the selected date

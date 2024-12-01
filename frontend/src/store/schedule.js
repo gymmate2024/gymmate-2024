@@ -7,6 +7,7 @@ const useScheduleStore = create((set) => ({
     selectedTime: null, // The time slot selected by the user
     scheduleData: null, // The schedule data fetched from the server
     scheduleId: null, // The ID of the fetched schedule
+    formattedDate: "",
 
     // Function to set the current date
     setCurrentDate: (date) => set({ currentDate: date }),
@@ -20,12 +21,21 @@ const useScheduleStore = create((set) => ({
     // Function to set the fetched schedule data
     setScheduleData: (data) => set({ scheduleData: data, scheduleId: data ? data._id : null }),
 
+    setFormattedDate: (date) => set({ formattedDate: date }),
+
     // Function to reset the schedule state
     resetScheduleState: () => set({ selectedDay: null, selectedTime: null, scheduleData: null, scheduleId: null }),
 
     // Function to fetch schedule data by date
     fetchScheduleByDate: async (date) => {
-        const formattedDate = new Date(date).toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+        // Check if the date is valid
+        const parsedDate = new Date(date);
+        if (isNaN(parsedDate)) {
+            console.error("Invalid date:", date);
+            return; // Exit if the date is invalid
+        }
+        
+        const formattedDate = parsedDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
         const response = await fetch(`http://localhost:5000/api/schedules/${formattedDate}`); // Adjust the URL as needed
         const data = await response.json();
     
@@ -41,6 +51,66 @@ const useScheduleStore = create((set) => ({
             set({ scheduleData: null, scheduleId: null }); // Clear the schedule data if not found
         }
     },
+
+    // Function to create a new schedule with fixed time slots
+    createSchedule: async (date) => {
+        const fixedTimeSlots = [
+            {
+                _startTime: "08:00 AM",
+                _endTime: "10:00 AM",
+                _availableSlots: 15,
+                _status: "Available",
+                _isFullyBooked: false,
+            },
+            {
+                _startTime: "10:00 AM",
+                _endTime: "12:00 PM",
+                _availableSlots: 15,
+                _status: "Available",
+                _isFullyBooked: false,
+            },
+            {
+                _startTime: "12:00 PM",
+                _endTime: "02:00 PM",
+                _availableSlots: 15,
+                _status: "Available",
+                _isFullyBooked: false,
+            },
+            {
+                _startTime: "02:00 PM",
+                _endTime: "04:00 PM",
+                _availableSlots: 15,
+                _status: "Available",
+                _isFullyBooked: false,
+            },
+        ];
+
+        const scheduleData = {
+            _date: new Date(date),
+            timeSlots: fixedTimeSlots,
+        };
+
+        try {
+            const response = await fetch('http://localhost:5000/api/schedules/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(scheduleData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                set({ scheduleData: data, scheduleId: data ? data._id : null }); // Ensure this line is executed
+                console.log("Schedule created successfully:", data); // Log the created schedule
+            } else {
+                console.error("Failed to create schedule:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error creating schedule:", error);
+        }
+    },
+
     
 }));
 
