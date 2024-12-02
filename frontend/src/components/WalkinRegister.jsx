@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Grid, Heading, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, Text, useDisclosure,} from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Grid, Heading, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, Text, useDisclosure,} from "@chakra-ui/react";
 import { FaEye, FaEyeSlash, FaImage, FaUpload, FaUser } from "react-icons/fa";
 import useWalkinStore from "../store/walkin";
 
@@ -48,11 +48,18 @@ const WalkinRegister = () => {
                     <Button bg="white" color="#071434" border="2px" borderColor="#071434" _hover={{ bg: '#071434', color: 'white' }} _active={{ bg: 'gray.100', color: 'white' }} w="40" px={4} py={2} rounded="md" display="flex" alignItems="center" mb={4}>
                         <FaUpload style={{ marginRight: '0.5rem' }} /> Upload COR
                     </Button>
+                    <Flex direction="row" align="center" gap={1}>
+                        <Text>Are you an athlete?</Text>
+                        <Checkbox colorScheme='green' size="lg" bg="white" value="true"/>
+                    </Flex>
                 </Flex>
                 <Grid templateColumns="repeat(2, 1fr)" gap={6} colSpan={2}>
                     <Box>
                         <Text mb={2} color="gray.700">Name</Text>
-                        <Input bg="white" boxShadow="lg" placeholder="ex. Juan Dela Cruz" />
+                        <Flex direction="row" align="center" gap={2}> 
+                            <Input bg="white" boxShadow="lg" placeholder="ex. Juan" />
+                            <Input bg="white" boxShadow="lg" placeholder="ex. Dela Cruz" />
+                        </Flex>
                     </Box>
                     <Box>
                         <Text mb={2} color="gray.700">Sex</Text>
@@ -65,11 +72,46 @@ const WalkinRegister = () => {
                     </Box>
                     <Box>
                         <Text mb={2} color="gray.700">College & Course</Text>
-                        <Select bg="white" boxShadow="lg" placeholder="Choose College & Course"/>
+                        <Flex gap={2}>
+                            <Select 
+                                bg="white" 
+                                boxShadow="lg" 
+                                placeholder="College"
+                            >
+                                <option value="CCIS">CCIS</option>
+                            </Select>
+                            <Select 
+                                bg="white" 
+                                boxShadow="lg" 
+                                placeholder="Course"
+                            >
+                                <option value="course1">Social Computing</option>
+                                <option value="course2">Application Development</option>
+                            </Select>
+                        </Flex>
                     </Box>
                     <Box>
                         <Text mb={2} color="gray.700">Year & Section</Text>
-                        <Select bg="white" boxShadow="lg" placeholder="Choose Year & Section" />
+                        <Flex gap={2}>
+                            <Select 
+                                bg="white" 
+                                boxShadow="lg" 
+                                placeholder="Year"
+                            >
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                            </Select>
+                            <Select 
+                                bg="white" 
+                                boxShadow="lg" 
+                                placeholder="Section"
+                            >
+                                <option value="course1">ACSSC</option>
+                                <option value="course2">ACSAD</option>
+                            </Select>
+                        </Flex>
                     </Box>
                     <Box>
                         <Text mb={2} color="gray.700">UMak Email Address</Text>
@@ -119,7 +161,7 @@ const WalkinRegister = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <Flex justify="space-between" mt={20}>
+            <Flex justify="space-between" mt={10}>
                 <Button bgColor="white" color="#FE7654" border="2px" borderColor="#FE7654" _hover={{ bg: '#FE7654', color: 'white' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleRegCancel}>Cancel</Button>
                 <Button bgColor='#FE7654' color='white' _hover={{ bg: '#e65c3b' }} _active={{ bg: '#cc4a2d' }} px={6} py={2} rounded="md" onClick={handleRegRegister}>Register</Button>
             </Flex>
