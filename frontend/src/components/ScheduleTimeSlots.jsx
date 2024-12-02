@@ -207,6 +207,7 @@ const ScheduleTimeSlots = () => {
                                             <option value="Fully Booked">Fully Booked</option>
                                             <option value="Under Maintenance">Under Maintenance</option>
                                             <option value="Reserved">Reserved</option>
+                                            <option value="Unavailable">Unavailable</option>
                                         </Select>
                                     </Flex>
                                 </VStack>
