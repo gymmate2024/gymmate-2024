@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const student = new mongoose.Schema({
+const studentSchema = new mongoose.Schema({
     _fName: {
         type: String,
         required: true
@@ -46,6 +46,11 @@ const student = new mongoose.Schema({
         required: true
     },
     _activeStat: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    _isAthlete: {
         type: Boolean,
         default: false,
         required: true

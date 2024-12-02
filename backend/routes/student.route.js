@@ -6,6 +6,6 @@ const router = express.Router();
 // Route for creating a new admin
 router.post("/", createStudent);
 
-const adminsRoutes = router;
+const studentsRoutes = router;
 
-export default adminsRoutes;
+export default studentsRoutes;

@@ -15,7 +15,8 @@ export const createStudent = async (req, res) => {
         !student._umakID || student._umakID == "" ||
         !student._password || student._password == "" ||
         !student._lastLogin || student._lastLogin == "" ||
-        !student._activeStat || student._activeStat == ""
+        !student._activeStat || student._activeStat == "" ||
+        !student._isAthlete || student._isAthlete == ""
     ) {
         return res.status(400).json({ success:false, message: "Please fill in all fields" });
     }
